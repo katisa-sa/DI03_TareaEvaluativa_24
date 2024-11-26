@@ -1,0 +1,7 @@
+{
+  "name": "DI03_TareaEvaluativa_Noticias_24",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
