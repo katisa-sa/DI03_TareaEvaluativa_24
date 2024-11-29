@@ -10,6 +10,7 @@ import { IArticulo } from 'src/app/misInterfaces/noticias-interface';
 })
 export class NoticiaCardComponent   {
 
+  //para que los datos puedan rellenarse en tab2
   @Input() articulo: IArticulo = {} as IArticulo;
 
   constructor(private gestionNoticia: NoticiasServiceService) { }

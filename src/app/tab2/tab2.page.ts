@@ -13,12 +13,15 @@ export class Tab2Page {
   listaNoticias:IArticulo[] = [];
 
   constructor( private gestionNoticia: NoticiasServiceService, private alertController: AlertController) {
+    //cargamos la lista de noticias seleccionadas desde el servicio
     this.listaNoticias = gestionNoticia.getNoticiasSeleccionadas();
   }
-
+  //borramos las noticias desde el servicio
   borrarArticulo(articulo: IArticulo){
     this.gestionNoticia.borrarNoticia(articulo);
   }
+
+  //creamos una alerta que confirme si se quiere borrar la noticia o no
   async presentAlert(articulo:IArticulo){
     const alert = await this.alertController.create({
       header: 'Confirmar',

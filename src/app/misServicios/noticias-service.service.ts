@@ -48,7 +48,7 @@ export class NoticiasServiceService {
     // añadimos a la lista de noticias una noticia nueva
     this.noticiasSeleccionadas.push (nuevaNoticia);
   }
-
+  //buscamos el indice de una noticia y lo retornamos
   buscarNoticia(articulo:IArticulo): number{
     let indice:number = this.noticiasSeleccionadas.findIndex(
       function(datos){
@@ -57,7 +57,7 @@ export class NoticiasServiceService {
     )   
     return indice;
   }
-
+  // borramos una noticia de la lista de seleccionados
   borrarNoticia(articulo: IArticulo){
     let indice = this.buscarNoticia(articulo);
     if(indice = -1) {
