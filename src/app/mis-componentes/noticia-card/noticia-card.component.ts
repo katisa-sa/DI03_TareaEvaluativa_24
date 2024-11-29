@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { NoticiasServiceService } from './../../misServicios/noticias-service.service';
+import { Component, Input } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { IArticulo } from 'src/app/misInterfaces/noticias-interface';
 
 @Component({
   selector: 'app-noticia-card',
@@ -7,8 +10,9 @@ import { Component } from '@angular/core';
 })
 export class NoticiaCardComponent   {
 
-  constructor() { }
+  @Input() articulo: IArticulo = {} as IArticulo;
 
-  
+  constructor(private gestionNoticia: NoticiasServiceService) { }
+
 
 }

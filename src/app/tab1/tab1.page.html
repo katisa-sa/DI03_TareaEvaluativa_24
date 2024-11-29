@@ -7,12 +7,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-list lines="inset" *ngFor="let item of listaNoticias">
-      <ion-item *ngFor="let articulo of item.articles">
-        <ion-label>
-      <h2>{{articulo.source.name}}</h2>
-      <p>{{articulo.title}}</p>
+  <ion-list lines="inset">
+    <ion-item *ngFor="let item of listaNoticias">
+      <ion-checkbox color="primary" slot="start" [checked]= "seleccionado(item)" (ionChange)="siNoticia($event, item)"></ion-checkbox>
+      <ion-label>        
+        <h2>{{item.source.name}}</h2>
+        <p>{{item.title}}</p>
       </ion-label>
-    </ion-item>
+    </ion-item>   
   </ion-list>
 </ion-content>

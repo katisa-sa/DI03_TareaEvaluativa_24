@@ -8,10 +8,14 @@ import { IonicModule } from '@ionic/angular';
 
 
 @NgModule({
-  declarations: [ExploreContainerComponent,NoticiaCardComponent],
+  declarations: [ExploreContainerComponent, NoticiaCardComponent],
   imports: [
     CommonModule,
     IonicModule
+  ],
+  exports: [
+    NoticiaCardComponent,
+    ExploreContainerComponent
   ]
 })
 export class MisComponentesModule { }

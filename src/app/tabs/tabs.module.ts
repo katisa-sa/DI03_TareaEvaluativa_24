@@ -7,6 +7,24 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
 import { AppModule } from '../app.module';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: TabsPage,
+    children: [
+      {
+        path: 'tab1',
+        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+      },
+      {
+        path: 'tab2',
+        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+      }
+    ]
+  }
+];
 
 @NgModule({
   imports: [
@@ -14,7 +32,7 @@ import { AppModule } from '../app.module';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    AppModule
+    RouterModule.forChild(routes)
   ],
   declarations: [TabsPage]
 })
