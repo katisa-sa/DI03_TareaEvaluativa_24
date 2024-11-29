@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NoticiasServiceService } from '../misServicios/noticias-service.service';
+import { IArticulo, INoticia } from '../misInterfaces/noticias-interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +10,16 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  listaNoticias: INoticia[] = [];
+
+  constructor(private leerNoticias: NoticiasServiceService) {
+    
+
+  }
+
+  ngOnInit(){
+
+    this.listaNoticias = this.leerNoticias.getNoticias();
+  }
 
 }
