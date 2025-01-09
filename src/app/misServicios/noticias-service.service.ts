@@ -37,9 +37,9 @@ export class NoticiasServiceService {
   }*/
 
   // metodo para obtener la lista de noticias
-  getNoticias(){
+  /*getNoticias(){
     return this.listaNoticias;
-  }
+  }*/
 
   getNoticiasSeleccionadas(){
     return this.noticiasSeleccionadas;
