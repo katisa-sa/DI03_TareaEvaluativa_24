@@ -1,8 +1,8 @@
-
 import { Injectable } from '@angular/core';
 import { IArticulo, INoticia } from '../misInterfaces/noticias-interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AlmacenStorageServiceService } from './almacen-storage-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,31 +12,34 @@ export class NoticiasServiceService {
   listaNoticias: IArticulo[] = [];
   noticiasSeleccionadas: IArticulo[] = [];
   
-
-  constructor(private leerFichero: HttpClient) { 
-    //llamamos al método para que cargue la lista de noticias que se lee del archivo json al inicializar
-    this.getNoticiasFichero();
+  
+  constructor(private leerFichero: HttpClient, private almacenarNoticias: AlmacenStorageServiceService) { 
+    //recuperamos los datos del almacenamiento si los hubiera    
+    let noticiasPromesa: Promise<IArticulo[]> = almacenarNoticias.getObject("noticias");
+    noticiasPromesa.then( datos=> {
+      this.noticiasSeleccionadas.push(...datos);
+    })
   }
 
-  //metodo que lee las noticias de articulos.json
+  /*//metodo que lee las noticias de articulos.json
   getNoticiasFichero(){
     //declaramos la variable que va a ser un observable de un array noticias
     let datosFichero: Observable<INoticia>;
-
     //inicializamos la variable 
     datosFichero = this.leerFichero.get<INoticia>("/assets/datos/articulos.json");
-
     //Nos suscrinimos a los datos y le decimos que hacer con ellos
     datosFichero.subscribe(datos => {
       console.log(datos);
       //añadimos los datos al array de noticias
       this.listaNoticias.push(...datos.articles);
         })
-  }
+  }*/
+
   // metodo para obtener la lista de noticias
   getNoticias(){
     return this.listaNoticias;
   }
+
   getNoticiasSeleccionadas(){
     return this.noticiasSeleccionadas;
   }
@@ -47,7 +50,9 @@ export class NoticiasServiceService {
     nuevaNoticia = JSON.parse(articuloString);
     // añadimos a la lista de noticias una noticia nueva
     this.noticiasSeleccionadas.push (nuevaNoticia);
+    this.almacenarNoticias.setObject("noticias", this.noticiasSeleccionadas);
   }
+
   //buscamos el indice de una noticia y lo retornamos
   buscarNoticia(articulo:IArticulo): number{
     let indice:number = this.noticiasSeleccionadas.findIndex(
@@ -57,13 +62,15 @@ export class NoticiasServiceService {
     )   
     return indice;
   }
+
   // borramos una noticia de la lista de seleccionados
   borrarNoticia(articulo: IArticulo){
     let indice = this.buscarNoticia(articulo);
-    if(indice = -1) {
+    if(indice != -1) {
       this.noticiasSeleccionadas.splice(indice, 1);
+      this.almacenarNoticias.setObject("noticias", this.noticiasSeleccionadas);
     }
   }
 
-
+  
 }
