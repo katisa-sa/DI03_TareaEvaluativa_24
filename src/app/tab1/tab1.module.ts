@@ -6,6 +6,7 @@ import { Tab1Page } from './tab1.page';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { MisComponentesModule } from '../mis-componentes/mis-componentes.module';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { MisComponentesModule } from '../mis-componentes/mis-componentes.module'
     CommonModule,
     FormsModule,
     MisComponentesModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
   ],
   declarations: [Tab1Page]
 })

@@ -9,16 +9,16 @@
     Los valores los saca del array categorías
     Cuando cambie de valor se llamará al método cambiarCategoria y se le pasará el evento
    -->
-  <ion-segment scrollable [value]="catNoticias[0]" (ion-change)="cambioCategoria($event)" >
-      <ion-segment-button *ngFor="let categoria of catNoticias" [value]="categoria">
-        <p>{{categoria}}</p>
-      </ion-segment-button>
+  <ion-segment scrollable [value]="listaCategorias[0]" (ionChange)="cambioCategoria($event)">
+    <ion-segment-button [value]="categoria" *ngFor="let categoria of listaCategorias">
+      <ion-label>{{categoria}}</ion-label>
+    </ion-segment-button>
   </ion-segment>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list lines="inset">
-    <ion-item *ngFor="let item of listaNoticias">
+  <ion-list lines="inset" *ngFor="let item of listaNoticias">
+    <ion-item>
       <ion-checkbox color="primary" slot="start" [checked]= "seleccionado(item)" (ionChange)="siNoticia($event, item)"></ion-checkbox>
       <ion-label>        
         <h2>{{item.source.name}}</h2>

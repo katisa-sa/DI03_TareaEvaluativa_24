@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
+import { IArticulo } from '../misInterfaces/noticias-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class AlmacenStorageServiceService {
   
   // A partir de su clave obtiene un objeto almacenado en local
   // Antes de devolverlo, debe ser convertido de formato JSON a formato normal
-  async getObject(key: string) {
+  async getObject(key: string): Promise<IArticulo[]> {
     const ret: any = await Preferences.get({ key });
     return JSON.parse(ret.value);
   }

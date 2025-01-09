@@ -11,14 +11,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class Tab1Page {
 
-  listaNoticias: IArticulo[] = [];
-  catNoticias: string[] = ["general", "business", "entertainment", "health", "science", "sports", "technology"];
+  
+  listaCategorias: string[] = ["general", "business", "technology", "science", "sports", "entertainment", "health"];
   apiKey: string = "95f72f17192c44e5861827c824a05dce";
-  categoriaSeleccionada: string = this.catNoticias[0];
+  
+  listaNoticias: IArticulo[] = [];
 
-  constructor(private leerNoticias: NoticiasServiceService, private consultaRest: HttpClient) {
-    //this.listaNoticias = this.leerNoticias.getNoticias();
-    this.cargarNoticias(this.categoriaSeleccionada);
+  constructor(public leerNoticias: NoticiasServiceService, private consultaRest: HttpClient) {
+    //Llamamos a la funcion cargarNoticia con el primer elemento del array
+    this.cargarNoticias(this.listaCategorias[0]);
   }
 
   // Comprueba si la noticia seleccionada (checked) está para leer o no
@@ -39,21 +40,22 @@ export class Tab1Page {
       this.leerNoticias.borrarNoticia(item);
     }
   }
-
-  cambioCategoria(evento:any){
-    this.categoriaSeleccionada = evento.detail.value;
-    console.log(this.categoriaSeleccionada);
-    this.cargarNoticias(this.categoriaSeleccionada);
-    
+  //recogemos el valor de la categoria y se lo pasaos como parametro a cargarNoticias()
+  public cambioCategoria(eventoR: any){
+    this.listaNoticias = [];
+    console.log(eventoR.detail.value);
+    this.cargarNoticias(eventoR.detail.value);
   }
-
-  cargarNoticias(categoria: string){
-
-    let respObservable:Observable<INoticia> = this.consultaRest.get<INoticia>("https://newsapi.org/v2/top-headlines?category="+categoria+"&apiKey=" + this.apiKey);
+  //Añadiendo el parámetro de categoría podemos hacer una consulta rest con esa categoria
+  private cargarNoticias(categoria: string){
+    //para poder realizar la consulta generamos un observable y nos suscribimos a la respuesta en cuanto la tenga
+    let respuesta: Observable<INoticia> = this.consultaRest.get<INoticia>("https://newsapi.org/v2/top-headlines?category=" + categoria + "&apiKey=" + this.apiKey);
     
-    respObservable.subscribe(datos=>{
+    respuesta.subscribe( datos => {
       //console.log(this.catNoticias);
+      if (datos && Array.isArray(datos.articles)) {
       this.listaNoticias.push(...datos.articles);
+      }
     });
           
   }

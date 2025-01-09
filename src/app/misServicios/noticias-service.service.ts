@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IArticulo, INoticia } from '../misInterfaces/noticias-interface';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { AlmacenStorageServiceService } from './almacen-storage-service.service';
 
 @Injectable({
@@ -17,7 +16,9 @@ export class NoticiasServiceService {
     //recuperamos los datos del almacenamiento si los hubiera    
     let noticiasPromesa: Promise<IArticulo[]> = almacenarNoticias.getObject("noticias");
     noticiasPromesa.then( datos=> {
+      if (Array.isArray(datos)) {
       this.noticiasSeleccionadas.push(...datos);
+      }
     })
   }
 
